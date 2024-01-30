@@ -1,0 +1,17 @@
+{
+    "jenkins-runner.jobs": {
+        "dev-pipeline": {
+            "isDefault": true,
+            "runWith": "Samir",
+            "name": "dev-pipeline"
+        }
+    },
+    "jenkins-runner.hostConfigs": {
+        "Samir": {
+            "url": "http://localhost:8080",
+            "user": "mohamed_samer",
+            "password": "Levai@1204",
+            "useCrumbIssuer": true
+        }
+    }
+}
