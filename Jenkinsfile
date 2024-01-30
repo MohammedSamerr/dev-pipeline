@@ -4,7 +4,7 @@ pipeline{
     environment{
         DOCKERHUB_USERNAME = "mohamedsamir12"
         APP_NAME= "git-ops-pipeline"
-        TAG_NAME = "v${BUILD_NUMBER}"
+        TAG_NAME = "${BUILD_NUMBER}"
         IMAGE_NAME= "${DOCKERHUB_USERNAME}" + "/" + "${APP_NAME}"
         REGISTRY_CREDS = "dockerhub"
     }
@@ -41,8 +41,8 @@ pipeline{
                     //first => login to dockerhub
                     // help jenkins to authenticate with dockerhub
                     docker.withRegistry('',REGISTRY_CREDS){
-                        docker_image.Push("$BUILD_NUMBER")
-                        docker_image.Push('latest')
+                        docker_image.push("$BUILD_NUMBER")
+                        docker_image.push('latest')
                     }
                 }
             }
