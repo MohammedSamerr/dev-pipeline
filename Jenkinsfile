@@ -53,7 +53,7 @@ pipeline{
             steps{
                 script{
                     sh "docker rmi ${IMAGE_NAME}:${TAG_NAME}"
-                    sh "docker rmi ${IMAGE_NAME}:latestca"
+                    sh "docker rmi ${IMAGE_NAME}:latest"
                 }
             }
         }
