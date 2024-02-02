@@ -57,6 +57,17 @@ pipeline{
                 }
             }
         }
-
+        
+        stage('Updating kubernetes deployment file'){
+            steps{
+                script{
+                        sh """
+                            cat deplument.yaml
+                            sed -i 's/${APP_NAME}.*/${APP_NAME}:${TAG_NAME}/g' deplument.yaml
+                            cat deplument.yaml
+                        """
+                }
+            }
+        }
     }
 }
