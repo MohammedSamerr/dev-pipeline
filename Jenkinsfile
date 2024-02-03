@@ -57,7 +57,7 @@ pipeline{
                 }
             }
         }
-        
+
         stage('Updating kubernetes deployment file'){
             steps{
                 script{
@@ -69,5 +69,25 @@ pipeline{
                 }
             }
         }
+
+        stage('Push changed deployment to Git'){
+            steps{
+                script{
+                        sh """
+                            git config --global user.name "MohammedSamerr"
+                            git config --global user.email "mohamed.samir2413@gmail.com"
+                            git add deplument.yaml
+                            git commit -m "update changes in deployment file"
+                            
+                        """
+                        withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                                    // some block
+                                    sh "git push https://github.com/MohammedSamerr/dev-pipeline.git master"
+                        }
+                }
+            }
+        }
     }
-}
+} 
+
+//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
