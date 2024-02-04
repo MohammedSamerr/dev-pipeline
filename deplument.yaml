@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app-deployment
 spec:
+  reolicas: 3
   selector:
     matchLabels:
       app: flask-app
@@ -20,6 +21,3 @@ spec:
             cpu: "500m"
         ports:
         - containerPort: 5000
-
-
-
