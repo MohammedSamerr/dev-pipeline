@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app-deployment
 spec:
-  reolicas: 3
+  reolicas: 5
   selector:
     matchLabels:
       app: flask-app

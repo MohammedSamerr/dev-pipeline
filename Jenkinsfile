@@ -82,7 +82,7 @@ pipeline{
                         """
                         withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
                                     // some block
-                                    sh "git push https://github.com/MohammedSamerr/dev-pipeline.git master"
+                                    sh "git push -f https://github.com/MohammedSamerr/dev-pipeline.git master"
                         }
                 }
             }
