@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: flask-app-deployment
 spec:
-  reolicas: 5
+  reolicas: 3
   selector:
     matchLabels:
       app: flask-app
@@ -13,7 +13,7 @@ spec:
         app: flask-app
     spec:
       containers:
-      - name: flask-app-deployment
+      - name: flask-app
         image: mohamedsamir12/git-ops-pipeline:v1
         resources:
           limits:

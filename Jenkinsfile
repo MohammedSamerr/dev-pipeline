@@ -58,32 +58,13 @@ pipeline{
             }
         }
 
-        stage('Updating kubernetes deployment file'){
+        stage('Trigger config change'){
             steps{
                 script{
-                        sh """
-                            cat deplument.yaml
-                            sed -i 's/${APP_NAME}.*/${APP_NAME}:${TAG_NAME}/g' deplument.yaml
-                            cat deplument.yaml
-                        """
-                }
-            }
-        }
-
-        stage('Push changed deployment to Git'){
-            steps{
-                script{
-                        sh """
-                            git config --global user.name "MohammedSamerr"
-                            git config --global user.email "mohamed.samir2413@gmail.com"
-                            git add deplument.yaml
-                            git commit -m "update changes in deployment file"
-                            
-                        """
-                        withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
-                                    // some block
-                                    sh "git push -f https://github.com/MohammedSamerr/dev-pipeline.git master"
-                        }
+                    sh """
+                    curl -v -k -user mohamed_samer:11178c8b2c30d25cc8984c7065a4485990 -X POST -data `IMAGE_TAG=${TAG_NAME}` `http://localhost:8080/job/devcd-pipline/bbuildWithParameters?token=deptest-config`
+                    """
+                    
                 }
             }
         }

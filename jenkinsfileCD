@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+
+    environment{
+        APP_NAME= "git-ops-pipeline"
+    }
+
+    stages{
+        stage('Cleanup workspace'){
+            steps{
+                script{
+                    cleanWs()
+                }
+            }
+        }
+        stage('Checkout SCM'){
+            steps{
+                script{
+                    git credentialsId : 'github',
+                    url: 'https://github.com/MohammedSamerr/dev-pipline-p.git',
+                    branch: 'main'
+                }
+            }
+        }
+
+        stage('Updating kubernetes deployment file'){
+            steps{
+                script{
+                        sh """
+                            cat deplument.yaml
+                            sed -i 's/${APP_NAME}.*/${APP_NAME}:${TAG_NAME}/g' deplument.yaml
+                            cat deplument.yaml
+                        """
+                }
+            }
+        }
+
+        stage('Push changed deployment to Git'){
+            steps{
+                script{
+                        sh """
+                            git config --global user.name "MohammedSamerr"
+                            git config --global user.email "mohamed.samir2413@gmail.com"
+                            git add .
+                            git commit -m "update changes in deployment file"
+                            
+                        """
+                        withCredentials([gitUsernamePassword(credentialsId: 'github', gitToolName: 'Default')]) {
+                                    // some block
+                                    sh "git push -f https://github.com/MohammedSamerr/dev-pipline-p.git main"
+                        }
+                }
+            }
+        }
+    }
+}
+
+
